@@ -1551,16 +1551,22 @@
             formError.hidden = true;
           }
 
-          fetch("https://script.google.com/macros/s/AKfycbyiDiXN1_jJVG1EtXN7pwr_90jnS7cLvGb74Ql0EoJf5B-SIeeBqKXXgnssiT2JIbOO/exec", {
+          fetch("https://scmdbhebbvnnhlmcoczi.supabase.co/rest/v1/leads", {
             method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "text/plain" },
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjbWRiaGViYnZubmhsbWNvY3ppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4MjUxMTAsImV4cCI6MjEwODQwMTExMH0.amwxG1Hr1cDjybWGKyPGCe8cd0Yf8d7EN1EKu3c0eA8",
+              "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjbWRiaGViYnZubmhsbWNvY3ppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4MjUxMTAsImV4cCI6MjEwODQwMTExMH0.amwxG1Hr1cDjybWGKyPGCe8cd0Yf8d7EN1EKu3c0eA8",
+              "Prefer": "return=minimal"
+            },
             body: JSON.stringify({
+              kind: "free_check",
               website: website.value.trim(),
               email: email.value.trim(),
               name: name.value.trim()
             })
-          }).then(function () {
+          }).then(function (resp) {
+            if (!resp.ok) { throw new Error("insert failed"); }
             showConfirm();
           }).catch(function () {
             sending = false;
@@ -1578,7 +1584,8 @@
     </script>
     <script>
       (function () {
-        var RELAY = "https://script.google.com/macros/s/AKfycbyiDiXN1_jJVG1EtXN7pwr_90jnS7cLvGb74Ql0EoJf5B-SIeeBqKXXgnssiT2JIbOO/exec";
+        var LEADS_URL = "https://scmdbhebbvnnhlmcoczi.supabase.co/rest/v1/leads";
+        var ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjbWRiaGViYnZubmhsbWNvY3ppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4MjUxMTAsImV4cCI6MjEwODQwMTExMH0.amwxG1Hr1cDjybWGKyPGCe8cd0Yf8d7EN1EKu3c0eA8";
         function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
         function wire(formId, emailId, marker, label, confirmId, errorId) {
           var form = document.getElementById(formId);
@@ -1599,12 +1606,17 @@
             var btn = form.querySelector("button");
             btn.disabled = true;
             btn.textContent = "Sending...";
-            fetch(RELAY, {
+            fetch(LEADS_URL, {
               method: "POST",
-              mode: "no-cors",
-              headers: { "Content-Type": "text/plain" },
-              body: JSON.stringify({ website: marker, email: v, name: label })
-            }).then(function () {
+              headers: {
+                "Content-Type": "application/json",
+                "apikey": ANON_KEY,
+                "Authorization": "Bearer " + ANON_KEY,
+                "Prefer": "return=minimal"
+              },
+              body: JSON.stringify({ kind: marker, email: v, name: label })
+            }).then(function (resp) {
+              if (!resp.ok) { throw new Error("insert failed"); }
               form.hidden = true;
               done.hidden = false;
             }).catch(function () {
@@ -1615,8 +1627,8 @@
             });
           });
         }
-        wire("gate-form", "gate-email", "SAMPLE-PDF-REQUEST", "Shopify sample PDF", "gate-confirm", "gate-error");
-        wire("waitlist-form", "wl-email", "GEO-WATCH-WAITLIST", "GEO Watch waitlist", "wl-confirm", "wl-error");
+        wire("gate-form", "gate-email", "sample_pdf", "Shopify sample PDF", "gate-confirm", "gate-error");
+        wire("waitlist-form", "wl-email", "geo_watch_waitlist", null, "wl-confirm", "wl-error");
       })();
     </script>
   </body>
