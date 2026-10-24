@@ -439,6 +439,7 @@
       /* Free check form */
       .form-panel {
         margin-top: 64px;
+        scroll-margin-top: 84px;
         border: 1px solid var(--cyan); border-radius: 20px;
         background:
           radial-gradient(520px 260px at 90% -30px, rgba(25, 227, 255, 0.14), rgba(25, 227, 255, 0) 70%),
@@ -779,7 +780,7 @@
           <a class="navlink" href="#sample">Sample</a>
           <a class="navlink" href="#pricing">Pricing</a>
           <a class="navlink" href="#faq">FAQ</a>
-          <a class="btn btn-primary btn-nav" href="#free-check">Free 5-question check</a>
+          <a class="btn btn-primary btn-nav" href="#get-check">Free 5-question check</a>
         </nav>
       </div>
     </header>
@@ -793,8 +794,8 @@
           <h1 class="reveal">AI search is recommending <span class="hl">your competitors.</span></h1>
           <p class="lede reveal">When buyers ask <strong>ChatGPT, Claude, or Gemini</strong> who to pick, what do they hear about you? We find out.</p>
           <div class="hero-actions reveal">
-            <a class="btn btn-primary" href="#free-check">Get the free 5-question check</a>
-            <p class="hero-note">We run five buyer questions in your category and send you what the AI says. <strong>Free, no call needed.</strong> The <a href="#free-check">free 5-question check</a> is the quick version. The AI Shelf Test below is the full one.</p>
+            <a class="btn btn-primary" href="#get-check">Get the free 5-question check</a>
+            <p class="hero-note">We run five buyer questions in your category and send you what the AI says. <strong>Free, no call needed.</strong> The <a href="#get-check">free 5-question check</a> is the quick version. The AI Shelf Test below is the full one.</p>
           </div>
           <p class="soon-note reveal"><span class="pulse-dot" aria-hidden="true"></span> Grok (xAI) and Perplexity audits coming soon.</p>
         </div>
@@ -876,7 +877,7 @@
             </div>
           </div>
 
-          <div class="form-panel reveal">
+          <div class="form-panel reveal" id="get-check">
             <h3 class="form-title">Get your free 5-question check</h3>
             <p class="form-sub">Tell us where to look and where to send it. A human takes it from there, and your answers land in your inbox within 24 hours.</p>
             <form id="check-form" novalidate>
@@ -1331,7 +1332,7 @@
             <p class="sec-label">Start here</p>
             <h2 id="cta-heading">Find out what the AI says about you.</h2>
             <p>Email us and we will run a free 5-question check in your category: five real buyer questions, three AI assistants, and the honest answer to who gets recommended. If it is not you, the report shows what to publish to change it.</p>
-            <a class="btn btn-primary" href="#free-check">Get the free 5-question check</a>
+            <a class="btn btn-primary" href="#get-check">Get the free 5-question check</a>
           </div>
         </div>
       </section>
