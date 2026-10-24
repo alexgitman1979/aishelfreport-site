@@ -466,6 +466,14 @@
       .field input::placeholder { color: var(--ink-3); }
       .field input:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(25, 227, 255, 0.18); }
       .field input.invalid { border-color: var(--red); }
+      .field textarea {
+        width: 100%; padding: 13px 15px;
+        background: var(--bg-deep); border: 1px solid var(--line-strong); border-radius: 10px;
+        color: var(--ink); font: inherit; font-size: 1rem; resize: vertical;
+      }
+      .field textarea::placeholder { color: var(--ink-3); }
+      .field textarea:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(25, 227, 255, 0.18); }
+      .field textarea.invalid { border-color: var(--red); }
       .field-error { margin: 8px 0 0; font-size: 0.9rem; color: var(--red); line-height: 1.5; }
       .form-row { display: grid; }
       @media (min-width: 640px) { .form-row { grid-template-columns: 1fr 1fr; column-gap: 18px; } }
@@ -1402,6 +1410,38 @@
         </div>
       </section>
 
+      <!-- Contact -->
+      <section class="band" id="contact" aria-labelledby="contact-heading">
+        <div class="wrap">
+          <p class="sec-label reveal">Contact</p>
+          <div class="section-head reveal">
+            <h2 id="contact-heading">Questions? Talk to a human.</h2>
+            <p>Ask about the audits, the method, or whether this is right for your business. A person reads every message and replies within one business day. Prefer email? Write to <a href="mailto:hello@aishelfreport.com">hello@aishelfreport.com</a>.</p>
+          </div>
+          <div class="form-panel reveal">
+            <form id="contact-form" novalidate>
+              <div class="form-row">
+                <div class="field">
+                  <label for="ct-name">Your name <span class="opt">(optional)</span></label>
+                  <input id="ct-name" type="text" autocomplete="name" placeholder="First and last name" />
+                </div>
+                <div class="field">
+                  <label for="ct-email">Your email <span class="req" aria-hidden="true">*</span></label>
+                  <input id="ct-email" type="email" autocomplete="email" placeholder="you@yourcompany.com" />
+                </div>
+              </div>
+              <div class="field">
+                <label for="ct-message">Your message <span class="req" aria-hidden="true">*</span></label>
+                <textarea id="ct-message" rows="5" placeholder="What would you like to know?"></textarea>
+              </div>
+              <button class="btn btn-primary form-submit" type="submit">Send message</button>
+              <p class="form-error" id="ct-error" hidden></p>
+            </form>
+            <p class="form-done" id="ct-confirm" hidden>Got it. Your message is in, and a human will reply within one business day.</p>
+          </div>
+        </div>
+      </section>
+
       <!-- Final CTA -->
       <section aria-labelledby="cta-heading" style="padding-top: 0;">
         <div class="wrap">
@@ -1629,6 +1669,60 @@
         }
         wire("gate-form", "gate-email", "sample_pdf", "Shopify sample PDF", "gate-confirm", "gate-error");
         wire("waitlist-form", "wl-email", "geo_watch_waitlist", null, "wl-confirm", "wl-error");
+      })();
+    </script>
+    <script>
+      (function () {
+        var CONTACT_URL = "https://scmdbhebbvnnhlmcoczi.supabase.co/rest/v1/contact_messages";
+        var ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjbWRiaGViYnZubmhsbWNvY3ppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4MjUxMTAsImV4cCI6MjEwODQwMTExMH0.amwxG1Hr1cDjybWGKyPGCe8cd0Yf8d7EN1EKu3c0eA8";
+        var form = document.getElementById("contact-form");
+        if (!form) return;
+        function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var name = document.getElementById("ct-name");
+          var email = document.getElementById("ct-email");
+          var message = document.getElementById("ct-message");
+          var err = document.getElementById("ct-error");
+          var done = document.getElementById("ct-confirm");
+          var ev = email.value.trim();
+          var mv = message.value.trim();
+          if (!validEmail(ev)) {
+            err.textContent = "That does not look like a valid email address. Check it and try again.";
+            err.hidden = false;
+            email.focus();
+            return;
+          }
+          if (!mv) {
+            err.textContent = "Please write a short message so we know how to help.";
+            err.hidden = false;
+            message.focus();
+            return;
+          }
+          err.hidden = true;
+          var btn = form.querySelector("button");
+          btn.disabled = true;
+          btn.textContent = "Sending...";
+          fetch(CONTACT_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": ANON_KEY,
+              "Authorization": "Bearer " + ANON_KEY,
+              "Prefer": "return=minimal"
+            },
+            body: JSON.stringify({ name: name.value.trim() || null, email: ev, message: mv })
+          }).then(function (resp) {
+            if (!resp.ok) { throw new Error("insert failed"); }
+            form.hidden = true;
+            done.hidden = false;
+          }).catch(function () {
+            btn.disabled = false;
+            btn.textContent = "Try again";
+            err.textContent = "That did not go through. Please try again, or email hello@aishelfreport.com.";
+            err.hidden = false;
+          });
+        });
       })();
     </script>
   </body>
