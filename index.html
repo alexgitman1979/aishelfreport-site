@@ -127,12 +127,15 @@
       }
       .masthead nav a.navlink:hover { color: var(--cyan-soft); background: rgba(25, 227, 255, 0.07); }
       @media (max-width: 720px) {
-        .masthead nav a.navlink { display: none; }
-        .masthead-inner { gap: 8px; min-height: 60px; }
+        .masthead-inner { flex-wrap: wrap; gap: 8px; min-height: 60px; padding-top: 8px; padding-bottom: 10px; }
+        .masthead nav { order: 3; flex: 1 1 100%; overflow-x: auto; scrollbar-width: none; }
+        .masthead nav::-webkit-scrollbar { display: none; }
+        .masthead nav a.navlink { display: inline-flex; white-space: nowrap; padding: 8px 10px; font-size: 0.88rem; }
+        section { scroll-margin-top: 132px; }
         .brand { gap: 8px; }
         .wordmark { font-size: 0.9rem; letter-spacing: -0.02em; }
         .brand img { width: 30px; height: 30px; border-radius: 7px; }
-        .masthead nav .btn-nav { min-height: 38px; padding: 8px 11px; font-size: 0.78rem; margin-left: 4px; border-radius: 8px; }
+        .masthead .btn-nav { min-height: 38px; padding: 8px 11px; font-size: 0.78rem; margin-left: 4px; border-radius: 8px; }
       }
       @media (max-width: 430px) {
         .masthead-inner { gap: 6px; }
@@ -140,7 +143,7 @@
         .brand img { width: 26px; height: 26px; border-radius: 6px; }
         .wordmark { font-size: 0.74rem; }
         .masthead nav { min-width: 0; }
-        .masthead nav .btn-nav { min-height: 34px; padding: 6px 8px; font-size: 0.67rem; margin-left: 0; flex: 0 0 auto; }
+        .masthead .btn-nav { min-height: 34px; padding: 6px 8px; font-size: 0.67rem; margin-left: 0; flex: 0 0 auto; }
       }
 
       /* Buttons */
@@ -914,8 +917,8 @@
           <a class="navlink" href="/articles/">Articles</a>
           <a class="navlink" href="#pricing">Pricing</a>
           <a class="navlink" href="#faq">FAQ</a>
-          <a class="btn btn-primary btn-nav" href="#get-check">Free 5-question check</a>
         </nav>
+        <a class="btn btn-primary btn-nav" href="#get-check">Free 5-question check</a>
       </div>
     </header>
 
