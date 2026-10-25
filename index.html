@@ -886,6 +886,19 @@
         .hc-row { grid-template-columns: 62px 1fr 42px; }
       }
 
+    
+      /* Articles section */
+      .articles-grid { display: grid; gap: 20px; margin-top: 36px; }
+      @media (min-width: 768px) { .articles-grid { grid-template-columns: repeat(2, 1fr); } }
+      .article-card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 26px; }
+      .article-card h3 { margin: 6px 0 10px; font-size: 1.25rem; line-height: 1.35; }
+      .article-card h3 a { color: var(--ink); text-decoration: none; }
+      .article-card h3 a:hover { color: var(--cyan-soft); }
+      .article-card p { color: var(--ink-2); }
+      .article-date { color: var(--cyan); font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase; margin: 0; }
+      .article-link { color: var(--cyan); font-weight: 600; text-decoration: none; }
+      .article-link:hover { text-decoration: underline; }
+      .articles-note { color: var(--ink-3); margin-top: 22px; }
     </style>
   </head>
   <body>
@@ -898,6 +911,7 @@
         <nav aria-label="Sections">
           <a class="navlink" href="#method">Method</a>
           <a class="navlink" href="#sample">Sample</a>
+          <a class="navlink" href="/articles/">Articles</a>
           <a class="navlink" href="#pricing">Pricing</a>
           <a class="navlink" href="#faq">FAQ</a>
           <a class="btn btn-primary btn-nav" href="#get-check">Free 5-question check</a>
@@ -1164,6 +1178,26 @@
           </div>
 
           <p class="sample-foot reveal">About this sample: we ran this Snapshot on our own to demonstrate the method, on a subject we chose, not a client engagement. A full audit runs the same kind of 40 buyer questions across ChatGPT, Claude, and Gemini, each question asked 4 times, for 480 captured answers in your category, against the competitors you name. How we score, and what API testing can and cannot show, is documented in the report itself.</p>
+        </div>
+      </section>
+
+
+      <!-- Articles -->
+      <section id="articles" aria-labelledby="articles-heading">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <h2 id="articles-heading">Articles: what the AIs actually say</h2>
+            <p class="section-intro">Every study we publish comes out of real audit runs: the same buyer questions, asked the same way, with the answers counted one by one. No opinions about AI search. Just what the engines said, and what it means if your buyers are asking them.</p>
+          </div>
+          <div class="articles-grid reveal">
+            <article class="article-card">
+              <p class="article-date">October 24, 2026</p>
+              <h3><a href="/articles/shopify-240-answers.html">We Asked ChatGPT, Claude, and Gemini to Recommend an E-commerce Platform 240 Times</a></h3>
+              <p>Shopify was named in every unbranded answer on all three engines. Its rivals were not, and on one engine the lead was an exact tie. What 240 real answers showed, and why the engine you skip is where the gaps hide.</p>
+              <a class="article-link" href="/articles/shopify-240-answers.html">Read the study</a>
+            </article>
+          </div>
+          <p class="articles-note">New studies are added as we run them. Each one starts with a question buyers actually ask.</p>
         </div>
       </section>
 
